@@ -1,0 +1,20 @@
+{
+  "categories": {
+    "firefox": [
+      "other"
+    ]
+  },
+  "default_locale": "en-US",
+  "name": {
+    "en-US": "DocViewKit Omni"
+  },
+  "summary": {
+    "en-US": "Preview local files and user-selected HTTP(S) documents in a read-only browser tab."
+  },
+  "support_email": {
+    "en-US": "novalag778@gmail.com"
+  },
+  "version": {
+    "license": "all-rights-reserved"
+  }
+}

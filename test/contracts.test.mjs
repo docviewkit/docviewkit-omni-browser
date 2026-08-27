@@ -101,6 +101,8 @@ test("version tags publish Chrome, Edge, and Firefox but not Safari", async () =
   assert.match(workflow, /tags:\s*\n\s*- "v\*"/u);
   assert.match(workflow, /test "\$VERSION" = "\$\(jq -r \.version package\.json\)"/u);
   assert.doesNotMatch(workflow, /warnings-as-errors/u);
+  assert.match(workflow, /--amo-metadata targets\/firefox\/amo-metadata\.json/u);
+  assert.equal((await json(path.join(root, "targets/firefox/amo-metadata.json"))).version.license, "all-rights-reserved");
   for (const store of ["chrome", "edge", "firefox"]) assert.match(workflow, new RegExp(`\\n  ${store}:`, "u"));
   assert.doesNotMatch(workflow, /\n  safari:/u);
 });

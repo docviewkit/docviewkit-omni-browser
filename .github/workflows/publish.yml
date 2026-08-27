@@ -93,12 +93,22 @@ jobs:
           echo "::add-mask::$TOKEN"
           ITEM="publishers/$PUBLISHER_ID/items/$EXTENSION_ID"
           PACKAGE=$(find release -name 'docviewkit-omni-chrome-*.zip' -print -quit)
-          RESPONSE=$(curl --fail --silent --show-error \
+          UPLOAD_CODE=$(curl --silent --show-error -o upload.json -w '%{http_code}' \
             -H "Authorization: Bearer $TOKEN" \
             -H "Content-Type: application/zip" \
             -X POST -T "$PACKAGE" \
             "https://chromewebstore.googleapis.com/upload/v2/$ITEM:upload")
-          STATE=$(jq -r .uploadState <<<"$RESPONSE")
+          if [[ "$UPLOAD_CODE" == 2* ]]; then
+            RESPONSE=$(<upload.json)
+          elif [[ "$UPLOAD_CODE" = 400 ]]; then
+            RESPONSE=$(curl --fail --silent --show-error \
+              -H "Authorization: Bearer $TOKEN" \
+              "https://chromewebstore.googleapis.com/v2/$ITEM:fetchStatus")
+          else
+            jq . upload.json
+            exit 1
+          fi
+          STATE=$(jq -r '.uploadState // .lastAsyncUploadState' <<<"$RESPONSE")
           for _ in {1..30}; do
             test "$STATE" != IN_PROGRESS && break
             sleep 10
@@ -184,5 +194,6 @@ jobs:
           npx --yes web-ext@10.6.0 sign \
             --source-dir dist/firefox \
             --channel listed \
+            --amo-metadata targets/firefox/amo-metadata.json \
             --approval-timeout 0 \
             --no-input
