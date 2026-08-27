@@ -6,11 +6,8 @@ button { min-height: 36px; padding: 6px 14px; border: 1px solid color-mix(in srg
 button:focus-visible, main:focus-visible { outline: 3px solid Highlight; outline-offset: 3px; }
 main { position: relative; width: 100%; height: 100%; }
 main.dragging { outline: 3px solid Highlight; outline-offset: -3px; }
-#welcome { position: absolute; left: 50%; top: 46%; width: min(560px, calc(100% - 48px)); transform: translate(-50%, -50%); }
-.wordmark { margin: 0 0 48px; color: color-mix(in srgb, CanvasText 58%, transparent); font-size: 13px; font-weight: 650; letter-spacing: .08em; text-transform: uppercase; }
-#welcome h1 { max-width: 500px; margin: 0; font-size: clamp(34px, 6vw, 58px); line-height: 1.06; letter-spacing: -.035em; }
-#privacy { max-width: 460px; margin: 20px 0 28px; color: color-mix(in srgb, CanvasText 66%, transparent); }
-#select { min-height: 42px; padding-inline: 18px; }
+#welcome { position: absolute; z-index: 2; left: 50%; top: calc(50% + 54px); transform: translate(-50%, -50%); pointer-events: none; }
+#select { min-height: 40px; padding-inline: 18px; pointer-events: auto; }
 #choose { display: none; position: fixed; z-index: 4; right: 12px; bottom: 38px; width: 36px; min-height: 36px; padding: 8px; border-color: color-mix(in srgb, CanvasText 22%, transparent); border-radius: 50%; background: color-mix(in srgb, Canvas 88%, transparent); color: CanvasText; opacity: .55; backdrop-filter: blur(8px); }
 #choose:hover, #choose:focus-visible { opacity: 1; }
 #choose svg { display: block; width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.7; }
@@ -19,8 +16,6 @@ main.dragging { outline: 3px solid Highlight; outline-offset: -3px; }
 #notice:has(button:not([hidden])) #status { margin-bottom: 14px; }
 #notice button + button { margin-left: 8px; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-docviewkit-viewer { display: none; width: 100%; height: 100%; }
-body.open docviewkit-viewer { display: block; }
+docviewkit-viewer { display: block; width: 100%; height: 100%; }
 body.open #welcome { display: none; }
 body.open #choose { display: block; }
-@media (max-width: 480px) { #welcome { width: calc(100% - 32px); } .wordmark { margin-bottom: 36px; } }

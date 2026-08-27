@@ -86,11 +86,20 @@ test("the link menu covers HTTP and HTTPS documents", async () => {
   assert.match(preview, /header: "Referer", operation: "set", value: referrer/u);
 });
 
-test("the extension shell disappears when the Viewer opens", async () => {
+test("the Viewer is the persistent shell and its empty state disappears on open", async () => {
   const html = await readFile(path.join(root, "src/preview.html"), "utf8");
   const css = await readFile(path.join(root, "src/preview.css"), "utf8");
   assert.doesNotMatch(html, /<header/u);
+  assert.doesNotMatch(html, /id="headline"|id="privacy"/u);
   assert.match(css, /body\.open #welcome \{ display: none; \}/u);
-  assert.match(css, /docviewkit-viewer \{ display: none; width: 100%; height: 100%; \}/u);
+  assert.match(css, /docviewkit-viewer \{ display: block; width: 100%; height: 100%; \}/u);
   assert.match(css, /body\.open #choose \{ display: block; \}/u);
+});
+
+test("version tags publish Chrome, Edge, and Firefox but not Safari", async () => {
+  const workflow = await readFile(path.join(root, ".github/workflows/publish.yml"), "utf8");
+  assert.match(workflow, /tags:\s*\n\s*- "v\*"/u);
+  assert.match(workflow, /test "\$VERSION" = "\$\(jq -r \.version package\.json\)"/u);
+  for (const store of ["chrome", "edge", "firefox"]) assert.match(workflow, new RegExp(`\\n  ${store}:`, "u"));
+  assert.doesNotMatch(workflow, /\n  safari:/u);
 });

@@ -1,0 +1,183 @@
+name: Publish browser extensions
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Verify tag and build
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          VERSION="${TAG#v}"
+          test "$TAG" = "v$VERSION"
+          test "$VERSION" = "$(jq -r .version package.json)"
+          for manifest in targets/*/manifest.json; do
+            test "$VERSION" = "$(jq -r .version "$manifest")"
+          done
+          npm run verify
+      - name: Package stores
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          VERSION="${TAG#v}"
+          mkdir release
+          (cd dist/chrome && zip -qr "../../release/docviewkit-omni-chrome-$VERSION.zip" .)
+          cp "release/docviewkit-omni-chrome-$VERSION.zip" "release/docviewkit-omni-edge-$VERSION.zip"
+          npx --yes web-ext@10.6.0 lint --source-dir dist/firefox --warnings-as-errors
+          npx --yes web-ext@10.6.0 build \
+            --source-dir dist/firefox \
+            --artifacts-dir release \
+            --filename "docviewkit-omni-firefox-$VERSION.zip" \
+            --overwrite-dest
+          (cd release && sha256sum *.zip > SHA256SUMS)
+      - uses: actions/upload-artifact@v7
+        with:
+          name: store-packages
+          path: release/
+          if-no-files-found: error
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" release/* --verify-tag --generate-notes
+
+  chrome:
+    needs: package
+    runs-on: ubuntu-latest
+    env:
+      CLIENT_ID: ${{ secrets.CHROME_CLIENT_ID }}
+      CLIENT_SECRET: ${{ secrets.CHROME_CLIENT_SECRET }}
+      REFRESH_TOKEN: ${{ secrets.CHROME_REFRESH_TOKEN }}
+      PUBLISHER_ID: ${{ vars.CHROME_PUBLISHER_ID }}
+      EXTENSION_ID: ${{ vars.CHROME_EXTENSION_ID }}
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: store-packages
+          path: release
+      - name: Upload and submit to Chrome Web Store
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$CLIENT_ID" && test -n "$CLIENT_SECRET" && test -n "$REFRESH_TOKEN"
+          test -n "$PUBLISHER_ID" && test -n "$EXTENSION_ID"
+          TOKEN=$(curl --fail --silent --show-error https://oauth2.googleapis.com/token \
+            --data-urlencode "client_id=$CLIENT_ID" \
+            --data-urlencode "client_secret=$CLIENT_SECRET" \
+            --data-urlencode "refresh_token=$REFRESH_TOKEN" \
+            --data-urlencode grant_type=refresh_token | jq -er .access_token)
+          echo "::add-mask::$TOKEN"
+          ITEM="publishers/$PUBLISHER_ID/items/$EXTENSION_ID"
+          PACKAGE=$(find release -name 'docviewkit-omni-chrome-*.zip' -print -quit)
+          RESPONSE=$(curl --fail --silent --show-error \
+            -H "Authorization: Bearer $TOKEN" \
+            -H "Content-Type: application/zip" \
+            -X POST -T "$PACKAGE" \
+            "https://chromewebstore.googleapis.com/upload/v2/$ITEM:upload")
+          STATE=$(jq -r .uploadState <<<"$RESPONSE")
+          for _ in {1..30}; do
+            test "$STATE" != IN_PROGRESS && break
+            sleep 10
+            RESPONSE=$(curl --fail --silent --show-error \
+              -H "Authorization: Bearer $TOKEN" \
+              "https://chromewebstore.googleapis.com/v2/$ITEM:fetchStatus")
+            STATE=$(jq -r .lastAsyncUploadState <<<"$RESPONSE")
+          done
+          test "$STATE" = SUCCEEDED || { jq . <<<"$RESPONSE"; exit 1; }
+          curl --fail --silent --show-error \
+            -H "Authorization: Bearer $TOKEN" \
+            -H "Content-Type: application/json" \
+            -X POST -d '{"publishType":"DEFAULT_PUBLISH","blockOnWarnings":true}' \
+            "https://chromewebstore.googleapis.com/v2/$ITEM:publish" | jq .
+
+  edge:
+    needs: package
+    runs-on: ubuntu-latest
+    env:
+      CLIENT_ID: ${{ secrets.EDGE_CLIENT_ID }}
+      API_KEY: ${{ secrets.EDGE_API_KEY }}
+      PRODUCT_ID: ${{ vars.EDGE_PRODUCT_ID }}
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: store-packages
+          path: release
+      - name: Upload and submit to Microsoft Edge Add-ons
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$CLIENT_ID" && test -n "$API_KEY" && test -n "$PRODUCT_ID"
+          API="https://api.addons.microsoftedge.microsoft.com/v1/products/$PRODUCT_ID"
+          PACKAGE=$(find release -name 'docviewkit-omni-edge-*.zip' -print -quit)
+          wait_for_edge() {
+            local endpoint="$1" response status
+            for _ in {1..30}; do
+              response=$(curl --fail --silent --show-error \
+                -H "Authorization: ApiKey $API_KEY" -H "X-ClientID: $CLIENT_ID" "$endpoint")
+              status=$(jq -r .status <<<"$response")
+              case "$status" in
+                Succeeded) jq . <<<"$response"; return 0 ;;
+                Failed) jq . <<<"$response"; return 1 ;;
+                InProgress) sleep 10 ;;
+                *) jq . <<<"$response"; return 1 ;;
+              esac
+            done
+            echo "Edge operation timed out" >&2
+            return 1
+          }
+          curl --fail --silent --show-error -D headers -o /dev/null \
+            -H "Authorization: ApiKey $API_KEY" -H "X-ClientID: $CLIENT_ID" \
+            -H "Content-Type: application/zip" -X POST -T "$PACKAGE" \
+            "$API/submissions/draft/package"
+          OPERATION_ID=$(awk 'tolower($1) == "location:" {gsub("\r", "", $2); print $2}' headers | tail -1)
+          test -n "$OPERATION_ID"
+          wait_for_edge "$API/submissions/draft/package/operations/$OPERATION_ID"
+          curl --fail --silent --show-error -D headers -o /dev/null \
+            -H "Authorization: ApiKey $API_KEY" -H "X-ClientID: $CLIENT_ID" \
+            -H "Content-Type: text/plain" -X POST \
+            --data "Submitted from GitHub tag $GITHUB_REF_NAME" "$API/submissions"
+          OPERATION_ID=$(awk 'tolower($1) == "location:" {gsub("\r", "", $2); print $2}' headers | tail -1)
+          test -n "$OPERATION_ID"
+          wait_for_edge "$API/submissions/operations/$OPERATION_ID"
+
+  firefox:
+    needs: package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Submit to Firefox Add-ons
+        env:
+          WEB_EXT_API_KEY: ${{ secrets.AMO_JWT_ISSUER }}
+          WEB_EXT_API_SECRET: ${{ secrets.AMO_JWT_SECRET }}
+        run: |
+          test -n "$WEB_EXT_API_KEY" && test -n "$WEB_EXT_API_SECRET"
+          npx --yes web-ext@10.6.0 sign \
+            --source-dir dist/firefox \
+            --channel listed \
+            --approval-timeout 0 \
+            --no-input

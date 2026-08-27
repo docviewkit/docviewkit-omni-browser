@@ -33,4 +33,15 @@ npm run verify
 - Firefox：在 `about:debugging` 临时加载 `dist/firefox/manifest.json`。
 - Safari：用 `safari-web-extension-converter dist/safari` 生成 macOS 包装；正式 bundle identifier 和签名由发布账户提供。
 
+## 商店自动发布
+
+推送与 `package.json` 版本一致的 `v*` tag 后，`.github/workflows/publish.yml` 会验证、打包并将同一 Chromium 产物提交至 Chrome Web Store 与 Microsoft Edge Add-ons，同时将 Firefox 产物提交至 AMO。Safari 暂不自动发布。
+
+首次发布需要先在 Chrome 和 Edge 后台手工创建商品，并在 GitHub 仓库配置以下 Actions secrets 与 variables：
+
+- Secrets：`CHROME_CLIENT_ID`、`CHROME_CLIENT_SECRET`、`CHROME_REFRESH_TOKEN`、`EDGE_CLIENT_ID`、`EDGE_API_KEY`、`AMO_JWT_ISSUER`、`AMO_JWT_SECRET`
+- Variables：`CHROME_PUBLISHER_ID`、`CHROME_EXTENSION_ID`、`EDGE_PRODUCT_ID`
+
+商店审核通过后才会对用户生效；tag 触发代表自动提交审核，并不绕过各商店审核。
+
 只有有意升级 Viewer 时才运行 `npm run lock:viewer`，并提交新的 npm lockfile 与 `viewer/lock.json` 一起评审。
