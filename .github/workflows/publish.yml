@@ -118,11 +118,13 @@ jobs:
             STATE=$(jq -r .lastAsyncUploadState <<<"$RESPONSE")
           done
           test "$STATE" = SUCCEEDED || { jq . <<<"$RESPONSE"; exit 1; }
-          curl --fail --silent --show-error \
+          PUBLISH_CODE=$(curl --silent --show-error -o publish.json -w '%{http_code}' \
             -H "Authorization: Bearer $TOKEN" \
             -H "Content-Type: application/json" \
             -X POST -d '{"publishType":"DEFAULT_PUBLISH","blockOnWarnings":true}' \
-            "https://chromewebstore.googleapis.com/v2/$ITEM:publish" | jq .
+            "https://chromewebstore.googleapis.com/v2/$ITEM:publish")
+          jq . publish.json
+          [[ "$PUBLISH_CODE" == 2* ]]
 
   edge:
     needs: package
