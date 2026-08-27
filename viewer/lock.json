@@ -1,0 +1,163 @@
+{
+  "package": "@docviewkit/viewer",
+  "version": "0.2.56",
+  "integrity": "sha512-qxoZIlL7C/YJSa39FIkKsDFzF+FHRUN9XOfgnDlU5irxpcrAy4MGffDhG7ivVtWsa8w1bRuNo2x33RNOOBiJnQ==",
+  "apiMajor": 1,
+  "formats": {
+    "pptx": [
+      "pptx"
+    ],
+    "odp": [
+      "odp"
+    ],
+    "xlsx": [
+      "xlsx"
+    ],
+    "ods": [
+      "ods"
+    ],
+    "docx": [
+      "docx"
+    ],
+    "odt": [
+      "odt"
+    ],
+    "csv": [
+      "csv"
+    ],
+    "rtf": [
+      "rtf"
+    ],
+    "ppt": [
+      "ppt"
+    ],
+    "xls": [
+      "xls"
+    ],
+    "doc": [
+      "doc"
+    ],
+    "pages": [
+      "pages"
+    ],
+    "numbers": [
+      "numbers"
+    ],
+    "keynote": [
+      "keynote"
+    ],
+    "pdf": [
+      "pdf"
+    ],
+    "xps": [
+      "xps"
+    ]
+  },
+  "files": {
+    "FREE_VIEWER_LICENSE.md": "ad78d13c2ef2a76babf9bac03cd752429eb790dbf7c5b86bb3993ae68c2d3789",
+    "README.md": "e91c8ea73a46f3ce4499e5e5ecdbba7555615ccc1c52f544d189943cbe182ee8",
+    "THIRD_PARTY_NOTICES.md": "44a5814feaa99a1f282e302b26f9ff5f4d86daee0156430091c8e61d3a105b09",
+    "accuracy.d.ts": "8d43c767afd527c4973e9491c838435b48f0802be6cbe4ea042dbbc1761a7cb0",
+    "bytes.d.ts": "34c066003e4dd867ba97846906d75eab53c35fa72ce9b6f138f2de89d349c85c",
+    "core.d.ts": "0d5987e6dfd6e0740d139d6ef7fd3e3aee8e1c2bf5cf2cf23ece593858e20ab7",
+    "engine.d.ts": "a536fece45360dc39b551f2f74eb6d700b170ccbfae4be4c8fbcc3f67dc7bd17",
+    "extended-formats.d.ts": "d6c87bc2bf609b38bf0dad7a46337a4fc0be1f14bf75d64ba33085d1b566f8be",
+    "extended-formats.js": "f8fc4f55e9f2135cf2607187db4eda766414bbca03a2ba73368829386d41cefa",
+    "font-metrics.d.ts": "7bfdce24c583d4fd27b7f0775c70ceaa10d4642731b94e446c5d9b3675ba732f",
+    "font.d.ts": "0f1c3c2a618908805aedd0d8ff97c3bd0b91d57c3db74c74b699e386785401ef",
+    "format-pack.d.ts": "a2f287372fc68dd727242b0778f7417558f76979de65fbfb25c646529d5fb109",
+    "image-codec-client.d.ts": "ffe535eebf6904b76da495582fb13879eb1288acd0fb5c8d89eec5f51d3264b1",
+    "image-codec-worker.d.ts": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+    "image-codec-worker.js": "efe9bad187a2a2fd67a12be29a85334a7d71bedc3e6ec4f74debe21781cf715d",
+    "image-codecs.d.ts": "62c87122ecb3db5c9e0dd25006580c8fd2cca9dab999980d1adba884f4e79612",
+    "image.d.ts": "5dc001d7bd4ebc0d2afa1feacb8ffdf7adeb40232671f9c089815128ce4df7cf",
+    "index.d.ts": "74e778c2aedffed63cdbe9c7d65b8eea57b07f451025cd9afb4fe2059565e544",
+    "jxr_dec.wasm": "b2e816264f986b8ba85c9563a9b4806c4c7f22bf101e5935bd4f198478589486",
+    "lcms.wasm": "bb9c28e9de6ef25efdfe55a3132485535a974eaa68b5604f1432ef368f46e005",
+    "license.d.ts": "0eca885f8b4ea9ed274d96b9892dfc4c9dc78fd310c424b658ec5bc763104832",
+    "metafile-safety.d.ts": "809f58aff24162424259e9bac7affa50c43689dd21b46c42c2f264adb9d5948e",
+    "mtx-decompressor.d.ts": "c734c5f9e89590d8c14bfceed6f5047349793b7341143569dd5725fdcac49793",
+    "office-viewer-calc.wasm": "8ddc65ae933c586a2f07d371b681c450ed59c3bd22e1c4d5422f8072c8ce07dc",
+    "office-viewer-core.wasm": "dbd7339fea9374cee9f47bd70fa882acbbe9445f014c8c8bcaf8267eb99aefe1",
+    "office-viewer-legacy-office.wasm": "81127fb48a6365e299711324ae94247f1ae0ae54ec3fd33e4e88dbde5757124e",
+    "office-viewer-odf.wasm": "128c3a66619223d313225af3186f0945b6b860e87a956da1cf2dc3c38e7a3184",
+    "office-viewer-pdf.wasm": "e8ac0b23b3694c4f64f9ebcd41f42063a170801a9f20f0c5e97d4f8b7969fd44",
+    "office-viewer-xps.wasm": "6c570aed1784d07681fef7f54743ea7a81a7125a3184d8a32f2dd894c8c01102",
+    "openjpeg.wasm": "004a0e62db930ba9ff2a22212f4554d0bb57a0635a8287caf70f98117cee14ba",
+    "package.json": "99d3a0ac1393742296fa798f8d95e899b8c4b71aab44bec65e95ff158e4b039e",
+    "protocol.d.ts": "cc17941fb49873423285fbd5d49281bb758dc23c6d7ee180a8ed1e95b8678361",
+    "render.d.ts": "dbfe8ed5bf191e0adc5253c5ed137691dc7808e2f55313e65d9796903f7396f2",
+    "resvg.wasm": "22bf6e9f9a100d972da0411a69c5ba504367fc1fa87b3b64e3f35e53926d2d70",
+    "runtime-2XUEFCHK.js": "33fab19e96523b2d2ef70ede5c42fb97b89e96d8f773f3c44ffafa21d60c96dd",
+    "runtime-3ERUQPFS.js": "ca693f1ff159b2a74a345cd82946e9efc1eac6341bee436263f83264da3371b7",
+    "runtime-4RV76ASC.js": "b562cd01439f02510635d14b863bbabbf1e84746e6e66a9a660fb87955d7656d",
+    "runtime-ASZIGLCQ.js": "cdcf681a36a1fb110a4dc13704b36d43efa38cc991502d21fba98c0ae18ca50e",
+    "runtime-B2LPW33X.js": "6f871fba223ed2f1ce06d458469518c684eb1f5d84ba66dfd6fc645efdd6699e",
+    "runtime-KWUOKRRV.js": "eada2cb918bfe52c0cb7f6f90765e8c633fa9c5d26282944046053cd9d1563f7",
+    "runtime-MYN2B3XS.js": "73a8b45c32c6089619b3f6efd3e8dceedd3272a30f047d3a735ef6e41982e3d5",
+    "runtime-WDRFGQ7P.js": "fdc127d321ca729b46d9f29b9f0fb24d96a2d345554a82bbe318f006522afd19",
+    "scene.d.ts": "c0aeeceb65c97d848e96239f35f5dd6b3642d66a27e0f11d974e1e4d1887fa27",
+    "symbol-font-mappings.d.ts": "d88500404737ddc0f44107e0e9c4b34470b5028950483b6203d4c1c25a4030d1",
+    "third-party-licenses/@discourse_jxr@1.0.0-LICENSE": "8c3690b09c168f196446cf5904332023bbc15eb92b6a7cee470ac829e6a65d20",
+    "third-party-licenses/@kittl_little-cms@1.0.3-LICENSE": "6dbd60437f8ef91d8de1f08ad75882547fd4931bfcc3566a0735f28db1484d31",
+    "third-party-licenses/@resvg_resvg-wasm@2.6.2-LICENSE": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85",
+    "third-party-licenses/apache-poi-preset-shapes-Apache-2.0.txt": "2c27550900d2cabf83527a04600ba8042e3ba89e70ec077ff220afa48c8230a7",
+    "third-party-licenses/discourse-jxr-Apache-2.0.txt": "8c3690b09c168f196446cf5904332023bbc15eb92b6a7cee470ac829e6a65d20",
+    "third-party-licenses/emf-converter-Apache-2.0.txt": "2c27550900d2cabf83527a04600ba8042e3ba89e70ec077ff220afa48c8230a7",
+    "third-party-licenses/mtx-decompressor@1.6.0-LICENSE": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+    "third-party-licenses/openjpeg-BSD-2-Clause.txt": "7a81d5bbd4008c63cc4bf64496b1e75b9f5fbf009ec3b06c79d8b05974f6b8b6",
+    "third-party-licenses/pako-MIT.txt": "a04665b3b2de56c66730c1f720f528175739e4104f79073614aa611da1e85539",
+    "third-party-licenses/pako-zlib.txt": "d8b499598e43d755ea8918448128259ff01820c50d94d5a48c8883d0a594ddb1",
+    "third-party-licenses/pako@1.0.11-LICENSE": "a04665b3b2de56c66730c1f720f528175739e4104f79073614aa611da1e85539",
+    "third-party-licenses/pdfjs-openjpeg-BSD-2-Clause.txt": "717fc62da03292dbb4dd0c8280bd4ce7bb8550dcf31d772bc93455fb50313425",
+    "third-party-licenses/resvg-MPL-2.0.txt": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85",
+    "third-party-licenses/rust-alloc-no-stdlib@2.0.4-LICENSES.txt": "860615af8e37e1992e7658720aa2dc72362cde1e5cd2886023b3abab59521768",
+    "third-party-licenses/rust-alloc-stdlib@0.2.4-LICENSES.txt": "860615af8e37e1992e7658720aa2dc72362cde1e5cd2886023b3abab59521768",
+    "third-party-licenses/rust-block-buffer@0.10.4-LICENSES.txt": "7f56cd6726db153801a4184557f3738d44602e3550b9d38d78f730670079f15e",
+    "third-party-licenses/rust-brotli-decompressor@5.0.3-LICENSES.txt": "860615af8e37e1992e7658720aa2dc72362cde1e5cd2886023b3abab59521768",
+    "third-party-licenses/rust-brotli@8.0.4-LICENSES.txt": "ce7dd873aea12bfca433789a88f6aafb0a012c273b86a74f712460c507530314",
+    "third-party-licenses/rust-bytemuck@1.25.2-LICENSES.txt": "efda7df34d20eb57585fc6ceb4bdc64bd3574fc680ab87af3536eada6e43fe9a",
+    "third-party-licenses/rust-bytemuck_derive@1.11.0-LICENSES.txt": "efda7df34d20eb57585fc6ceb4bdc64bd3574fc680ab87af3536eada6e43fe9a",
+    "third-party-licenses/rust-cfg-if@1.0.4-LICENSES.txt": "c62c70e58580b1618ec1855f766ed067f49718515549c3700698067487f083eb",
+    "third-party-licenses/rust-crypto-common@0.1.7-LICENSES.txt": "b61e3e9ea51195d4dff7cd6f5fbbe04e8d49558eea01c345c966b8e403164105",
+    "third-party-licenses/rust-digest@0.10.7-LICENSES.txt": "9c1a25c4889afadc3202b425abd1f21fd3d68a37c61781de551d6bffef511686",
+    "third-party-licenses/rust-encoding_rs@0.8.35-LICENSES.txt": "831a7a22f7902fcb641e90a37765d6af71f19e0d42b132c51290dfaf11ce5ae6",
+    "third-party-licenses/rust-font-types@0.12.2-LICENSES.txt": "ec5835d0323c4bff3f943223e0ce051019f54768dffbf7c775883d6dac663154",
+    "third-party-licenses/rust-generic-array@0.14.7-LICENSES.txt": "9cfcb8cd10938eeeb461b255b9eeb8cac32b9aee5eec95fdc77082897330c991",
+    "third-party-licenses/rust-hayro-ccitt@0.3.0-LICENSES.txt": "1620e1c42d52b18f15a5cfb67ecae308c2d04f4014027ced8b6179dab104dc4e",
+    "third-party-licenses/rust-hayro-cmap@0.1.0-LICENSES.txt": "1620e1c42d52b18f15a5cfb67ecae308c2d04f4014027ced8b6179dab104dc4e",
+    "third-party-licenses/rust-hayro-jbig2@0.3.0-LICENSES.txt": "1620e1c42d52b18f15a5cfb67ecae308c2d04f4014027ced8b6179dab104dc4e",
+    "third-party-licenses/rust-hayro-postscript@0.1.0-LICENSES.txt": "1620e1c42d52b18f15a5cfb67ecae308c2d04f4014027ced8b6179dab104dc4e",
+    "third-party-licenses/rust-jpeg-decoder@0.3.2-LICENSES.txt": "012d71b6a6d8d84767d2d8bee156b93f75cab92f1ea3fc3f5a2b3c86507f7b50",
+    "third-party-licenses/rust-once_cell@1.21.4-LICENSES.txt": "bf4495093a9a3dd33d422cc65992f9d52412b56b34f0293dbbaff51ab65aa3c2",
+    "third-party-licenses/rust-proc-macro2@1.0.107-LICENSES.txt": "7f1f699fe76dd03b9475bab232d51631cbcb436098d7798e4b960da4db8f0f71",
+    "third-party-licenses/rust-quote@1.0.47-LICENSES.txt": "7f1f699fe76dd03b9475bab232d51631cbcb436098d7798e4b960da4db8f0f71",
+    "third-party-licenses/rust-read-fonts@0.41.0-LICENSES.txt": "ec5835d0323c4bff3f943223e0ce051019f54768dffbf7c775883d6dac663154",
+    "third-party-licenses/rust-sha2@0.10.9-LICENSES.txt": "ddda333761ce68e39f61418d0325395c4696555c84623aef3bfa00ec5b140c47",
+    "third-party-licenses/rust-skrifa@0.44.0-LICENSES.txt": "ec5835d0323c4bff3f943223e0ce051019f54768dffbf7c775883d6dac663154",
+    "third-party-licenses/rust-stringprep@0.1.5-LICENSES.txt": "8a19751c03053ac17380e004bb7fa9ff42a7fefea5da06f0ff94e53182e7594c",
+    "third-party-licenses/rust-syn@2.0.119-LICENSES.txt": "7f1f699fe76dd03b9475bab232d51631cbcb436098d7798e4b960da4db8f0f71",
+    "third-party-licenses/rust-tinyvec@1.12.0-LICENSES.txt": "63105975ac6a5aa68dfdf89490dc9874418d22ba0cbef3dce0b0d9473254b6b8",
+    "third-party-licenses/rust-tinyvec_macros@0.1.1-LICENSES.txt": "644136f17ac1f024bccad7e56cd3a5de9260909fbc034ad9e5f06b0eb19a8805",
+    "third-party-licenses/rust-typenum@1.20.1-LICENSES.txt": "1e1b6a9f01c3ca3c9e551ce479d2f5ee8db681cbafb3dd8c20c216b3f7bad864",
+    "third-party-licenses/rust-unicode-bidi@0.3.18-LICENSES.txt": "d0c3367896409294e4e55618bedd6528cfdf17d54f2ab9849c2bf2fc8ed7fe50",
+    "third-party-licenses/rust-unicode-ident@1.0.24-LICENSES.txt": "2bd9d166c6132409054311d085bfd7715cecb1a1a182622840385d4e9a6be010",
+    "third-party-licenses/rust-unicode-normalization@0.1.25-LICENSES.txt": "d0c3367896409294e4e55618bedd6528cfdf17d54f2ab9849c2bf2fc8ed7fe50",
+    "third-party-licenses/rust-unicode-properties@0.1.4-LICENSES.txt": "d0c3367896409294e4e55618bedd6528cfdf17d54f2ab9849c2bf2fc8ed7fe50",
+    "third-party-licenses/utif2-MIT.txt": "c1fb8861eca211bf5aea574358aba7039396c0c1824c2a1477cc126d398efd89",
+    "third-party-licenses/utif2@4.1.0-LICENSE": "c1fb8861eca211bf5aea574358aba7039396c0c1824c2a1477cc126d398efd89",
+    "types.d.ts": "4e19a00c14d1079289b15d73bbb2e10ed4724f73a4d963b404f8f8e12e07baa1",
+    "types.js": "6fbedfd8d053db34c2daf515b33b128f381a65e5e8f66acd125df1d1871cee70",
+    "version.json": "6485559c92ee707d3230e653120b5f31b904c6ae12a7ca8f26e110ef3ceb5715",
+    "viewer.d.ts": "d49f34d78c618307a87c8e8bb04355313c9be0e83a4bbaa91deeabd6d8f457ad",
+    "viewer.js": "700f6147900a1ac1e427c3cbf9aab192a0a9c44bbf942f193e074896304d5a3f",
+    "worker-engine.d.ts": "6739fb36a7d224906636c2f7a8d19ecaf24057d6804593b756e001fafbe09307",
+    "worker-protocol.d.ts": "955ee457c99bf36036c400d9c0568a70f45e0b0f012980e052799eebcd9005c8",
+    "worker.d.ts": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+    "worker.js": "40a21e4e5f7a4a401c330a6f15fede1216ba8a917ece1e2a8bb157ba9eeb592e",
+    "wps-formats.d.ts": "c99d3eb7a86ffc4f9a47f83a266e31345f24e37c695849a25dfe4d10d7e491f0",
+    "wps-formats.js": "396bad9a6662e842bdefc037e8a1613348a8c5f11a8997ca50e65ab6e7edc541",
+    "xps-formats.d.ts": "10c8fdeb6f03053e6b85204f1c34ad4295f27270861ee76de9fbb75b3d301f6a",
+    "xps-formats.js": "850fd313e1cae7a5b9a3738292bab396dce0635b24bfded272638697b6bb190d"
+  }
+}

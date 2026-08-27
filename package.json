@@ -1,0 +1,18 @@
+{
+  "name": "docviewkit-omni-for-browser",
+  "version": "0.1.11",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "lock:viewer": "node build.mjs --write-viewer-lock",
+    "test": "node --test",
+    "verify": "npm run build && npm test"
+  },
+  "dependencies": {
+    "@docviewkit/viewer": "0.2.56"
+  }
+}

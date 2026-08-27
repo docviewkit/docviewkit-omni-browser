@@ -1,0 +1,13 @@
+.DS_Store
+.playwright-cli/
+output/
+node_modules/
+build/
+dist/
+coverage/
+targets/safari/generated/
+*.pem
+.env
+.env.*
+!.env.example
+generated/

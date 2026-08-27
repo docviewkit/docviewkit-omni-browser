@@ -1,0 +1,5 @@
+{
+  "extensionName": { "message": "DocViewKit Omni" },
+  "extensionDescription": { "message": "私密、本地、只读的文档预览。" },
+  "previewLink": { "message": "使用 DocViewKit Omni 预览" }
+}

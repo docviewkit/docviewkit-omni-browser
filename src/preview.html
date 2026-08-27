@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DocViewKit Omni</title>
+    <link rel="stylesheet" href="preview.css">
+  </head>
+  <body>
+    <main id="drop" tabindex="0">
+      <input id="file" type="file" hidden>
+      <section id="welcome">
+        <p class="wordmark">DocViewKit Omni</p>
+        <h1 id="headline"></h1>
+        <p id="privacy"></p>
+        <button id="select" type="button"></button>
+      </section>
+      <button id="choose" type="button">
+        <svg aria-hidden="true" viewBox="0 0 24 24">
+          <path d="M5.75 3.75h7.5l5 5v11.5h-12.5zM13.25 3.75v5h5M9 14h6M12 11v6"/>
+        </svg>
+        <span id="choose-label" class="visually-hidden"></span>
+      </button>
+      <section id="notice" hidden role="status" aria-live="polite">
+        <p id="status"></p>
+        <button id="grant" type="button" hidden></button>
+        <button id="copy" type="button" hidden></button>
+      </section>
+      <docviewkit-viewer id="viewer"></docviewkit-viewer>
+    </main>
+    <script type="module" src="preview.js"></script>
+  </body>
+</html>
