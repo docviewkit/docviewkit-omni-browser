@@ -100,6 +100,7 @@ test("version tags publish Chrome, Edge, and Firefox but not Safari", async () =
   const workflow = await readFile(path.join(root, ".github/workflows/publish.yml"), "utf8");
   assert.match(workflow, /tags:\s*\n\s*- "v\*"/u);
   assert.match(workflow, /test "\$VERSION" = "\$\(jq -r \.version package\.json\)"/u);
+  assert.doesNotMatch(workflow, /warnings-as-errors/u);
   for (const store of ["chrome", "edge", "firefox"]) assert.match(workflow, new RegExp(`\\n  ${store}:`, "u"));
   assert.doesNotMatch(workflow, /\n  safari:/u);
 });

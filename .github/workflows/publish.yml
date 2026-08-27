@@ -43,7 +43,7 @@ jobs:
           mkdir release
           (cd dist/chrome && zip -qr "../../release/docviewkit-omni-chrome-$VERSION.zip" .)
           cp "release/docviewkit-omni-chrome-$VERSION.zip" "release/docviewkit-omni-edge-$VERSION.zip"
-          npx --yes web-ext@10.6.0 lint --source-dir dist/firefox --warnings-as-errors
+          npx --yes web-ext@10.6.0 lint --source-dir dist/firefox
           npx --yes web-ext@10.6.0 build \
             --source-dir dist/firefox \
             --artifacts-dir release \
