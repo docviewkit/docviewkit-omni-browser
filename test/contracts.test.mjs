@@ -89,11 +89,13 @@ test("the link menu covers HTTP and HTTPS documents", async () => {
 test("the Viewer is the persistent shell and its empty state disappears on open", async () => {
   const html = await readFile(path.join(root, "src/preview.html"), "utf8");
   const css = await readFile(path.join(root, "src/preview.css"), "utf8");
+  const preview = await readFile(path.join(root, "src/preview.js"), "utf8");
   assert.doesNotMatch(html, /<header/u);
   assert.doesNotMatch(html, /id="headline"|id="privacy"/u);
   assert.match(css, /body\.open #welcome \{ display: none; \}/u);
   assert.match(css, /docviewkit-viewer \{ display: block; width: 100%; height: 100%; \}/u);
   assert.match(css, /body\.open #choose \{ display: block; \}/u);
+  assert.match(preview, /features: \{ hyperlinks: false, interactionModeSwitcher: true \}/u);
 });
 
 test("version tags publish Chrome, Edge, and Firefox but not Safari", async () => {

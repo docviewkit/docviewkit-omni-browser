@@ -37,7 +37,7 @@ viewer.config = {
   locale: navigator.language,
   messages: { [navigator.language]: { empty: text.headline, emptyHint: text.privacy } },
   engine: { formatPack: () => Promise.resolve(extendedFormatPack) },
-  features: { hyperlinks: false },
+  features: { hyperlinks: false, interactionModeSwitcher: true },
 };
 
 function showStatus(message, { permission = false, failed = false } = {}) {
