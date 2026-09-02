@@ -1,6 +1,6 @@
 {
   "name": "docviewkit-omni-for-browser",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "private": true,
   "type": "module",
   "engines": {
@@ -13,6 +13,6 @@
     "verify": "npm run build && npm test"
   },
   "dependencies": {
-    "@docviewkit/viewer": "0.2.61"
+    "@docviewkit/viewer": "0.2.62"
   }
 }

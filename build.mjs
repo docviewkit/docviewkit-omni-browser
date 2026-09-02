@@ -25,8 +25,8 @@ async function viewerLock() {
   const packageJson = JSON.parse(await readFile(path.join(packageRoot, "package.json"), "utf8"));
   const npmLock = JSON.parse(await readFile(path.join(root, "package-lock.json"), "utf8"));
   const installed = npmLock.packages?.["node_modules/@docviewkit/viewer"];
-  if (packageJson.version !== "0.2.61" || installed?.version !== packageJson.version || !installed.integrity) {
-    throw new Error("@docviewkit/viewer must be installed from the exact locked 0.2.61 package");
+  if (packageJson.version !== "0.2.62" || installed?.version !== packageJson.version || !installed.integrity) {
+    throw new Error("@docviewkit/viewer must be installed from the exact locked 0.2.62 package");
   }
 
   const typeSource = await readFile(path.join(packageRoot, "types.d.ts"), "utf8");
