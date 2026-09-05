@@ -53,6 +53,7 @@ test("all manifests are least-privilege MV3 targets", async () => {
 
 test("three targets contain the same shared source and verified Viewer artifact", async () => {
   const lock = await json(path.join(root, "viewer/lock.json"));
+  assert.deepEqual(lock.formats.ofd, ["ofd"]);
   const shared = (await filesUnder(path.join(root, "src"))).filter((file) => file !== "README.md");
   for (const file of shared) {
     const expected = await readFile(path.join(root, "src", file));
