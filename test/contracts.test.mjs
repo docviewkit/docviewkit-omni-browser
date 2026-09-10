@@ -110,6 +110,8 @@ test("Firefox listing metadata can be updated without publishing another store",
   assert.match(workflow, /workflow_dispatch:/u);
   assert.match(workflow, /-X PATCH/u);
   assert.match(workflow, /addons\.mozilla\.org\/api\/v5\/addons\/addon\/omni%40docviewkit\.com\//u);
+  assert.match(workflow, /--form 'icon=@src\/icon-128\.png'/u);
+  assert.match(workflow, /contains\("\/default-"\) \| not/u);
   assert.doesNotMatch(workflow, /CHROME_|EDGE_/u);
 });
 

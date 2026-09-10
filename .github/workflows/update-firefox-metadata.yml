@@ -45,6 +45,17 @@ jobs:
             -H 'Content-Type: application/json' \
             --data @amo-metadata.json \
             "$API" >/dev/null
+          curl --fail --silent --show-error -X PATCH \
+            -H "Authorization: JWT $TOKEN" \
+            --form 'icon=@src/icon-128.png' \
+            "$API" >/dev/null
           EXPECTED=$(jq -c .summary amo-metadata.json)
-          ACTUAL=$(curl --fail --silent --show-error "${API}?lang=en-US" | jq -c .summary)
-          test "$ACTUAL" = "$EXPECTED"
+          for attempt in {1..12}; do
+            LIVE=$(curl --fail --silent --show-error "${API}?lang=en-US&check=$GITHUB_RUN_ID-$attempt")
+            if test "$(jq -c .summary <<<"$LIVE")" = "$EXPECTED" && jq -e '.icon_url | contains("/default-") | not' <<<"$LIVE" >/dev/null; then
+              exit 0
+            fi
+            sleep 5
+          done
+          jq '{summary, icon_url}' <<<"$LIVE"
+          exit 1
