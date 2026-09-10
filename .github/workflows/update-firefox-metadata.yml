@@ -1,0 +1,50 @@
+name: Update Firefox listing metadata
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Update and verify AMO metadata
+        env:
+          AMO_JWT_ISSUER: ${{ secrets.AMO_JWT_ISSUER }}
+          AMO_JWT_SECRET: ${{ secrets.AMO_JWT_SECRET }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$AMO_JWT_ISSUER" && test -n "$AMO_JWT_SECRET"
+          jq -e '.summary["en-US"] | length <= 250' targets/firefox/amo-metadata.json >/dev/null
+          jq '{summary}' targets/firefox/amo-metadata.json > amo-metadata.json
+          TOKEN=$(python3 - <<'PY'
+          import base64, hashlib, hmac, json, os, time, uuid
+
+          encode = lambda value: base64.urlsafe_b64encode(value).rstrip(b"=").decode()
+          issued_at = int(time.time())
+          header = encode(json.dumps({"alg": "HS256", "typ": "JWT"}, separators=(",", ":")).encode())
+          payload = encode(json.dumps({
+              "iss": os.environ["AMO_JWT_ISSUER"],
+              "jti": str(uuid.uuid4()),
+              "iat": issued_at,
+              "exp": issued_at + 60,
+          }, separators=(",", ":")).encode())
+          message = f"{header}.{payload}"
+          signature = encode(hmac.new(os.environ["AMO_JWT_SECRET"].encode(), message.encode(), hashlib.sha256).digest())
+          print(f"{message}.{signature}")
+          PY
+          )
+          echo "::add-mask::$TOKEN"
+          API='https://addons.mozilla.org/api/v5/addons/addon/omni%40docviewkit.com/'
+          curl --fail --silent --show-error -X PATCH \
+            -H "Authorization: JWT $TOKEN" \
+            -H 'Content-Type: application/json' \
+            --data @amo-metadata.json \
+            "$API" >/dev/null
+          EXPECTED=$(jq -c .summary amo-metadata.json)
+          ACTUAL=$(curl --fail --silent --show-error "${API}?lang=en-US" | jq -c .summary)
+          test "$ACTUAL" = "$EXPECTED"

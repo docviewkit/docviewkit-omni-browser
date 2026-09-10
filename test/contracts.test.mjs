@@ -99,6 +99,20 @@ test("the Viewer is the persistent shell and its empty state disappears on open"
   assert.match(preview, /features: \{ hyperlinks: false, interactionModeSwitcher: true \}/u);
 });
 
+test("the AMO summary names searchable document families within its character limit", async () => {
+  const amoSummary = (await json(path.join(root, "targets/firefox/amo-metadata.json"))).summary["en-US"];
+  assert.equal(amoSummary, "Local, read-only browser viewer for Microsoft Office—Word (DOC/DOCX), Excel (XLS/XLSX), PowerPoint (PPT/PPTX)—plus Apple iWork (Pages, Numbers, Keynote), OpenDocument (ODT/ODS/ODP), WPS, PDF, XPS, OFD, CSV, and RTF.");
+  assert.ok(amoSummary.length <= 250);
+});
+
+test("Firefox listing metadata can be updated without publishing another store", async () => {
+  const workflow = await readFile(path.join(root, ".github/workflows/update-firefox-metadata.yml"), "utf8");
+  assert.match(workflow, /workflow_dispatch:/u);
+  assert.match(workflow, /-X PATCH/u);
+  assert.match(workflow, /addons\.mozilla\.org\/api\/v5\/addons\/addon\/omni%40docviewkit\.com\//u);
+  assert.doesNotMatch(workflow, /CHROME_|EDGE_/u);
+});
+
 test("version tags publish Chrome, Edge, and Firefox but not Safari", async () => {
   const workflow = await readFile(path.join(root, ".github/workflows/publish.yml"), "utf8");
   assert.match(workflow, /tags:\s*\n\s*- "v\*"/u);
