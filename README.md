@@ -2,7 +2,9 @@
 
 DocViewKit Omni for Browser 是面向 Chrome、Firefox 与 Safari 桌面版的本地只读文档预览扩展。三个目标浏览器共享同一套 WebExtension 源码和同一版本、同一校验和的 DocViewKit Viewer 构建产物。
 
-核心固定为 `@docviewkit/viewer@0.2.67`。扩展提供本地文件选择/拖放、工具栏预览页、文档链接上下文菜单、逐来源按需 HTTP(S) 权限、重定向复核、取消与脱敏诊断；不包含 content script、全站安装权限、远程运行时代码或文档上传。
+核心固定为 `@docviewkit/viewer@0.2.69`。扩展提供本地文件选择/拖放、工具栏预览页、文档链接上下文菜单、逐来源按需 HTTP(S) 权限、重定向复核、取消与脱敏诊断；不包含 content script、全站安装权限、远程运行时代码或文档上传。
+
+用户主动预览远程文档时，已授权来源的请求使用浏览器已有登录态；扩展不读取或导出 Cookie，也不提取网站登录令牌。浏览器的 Cookie 策略、会话隔离和分区限制仍然生效，因此不能保证所有登录网站都能直接预览。无法检查目标来源的重定向会停止并提供诊断，不会静默扩大来源权限。
 
 ```text
 docviewkitOmniForBrowser/

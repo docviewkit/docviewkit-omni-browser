@@ -19,11 +19,11 @@ let revision = 0;
 const zh = navigator.language.toLowerCase().startsWith("zh");
 const text = zh ? {
   choose: "选择文件", headline: "选择或拖入文档", privacy: "文件仅在本机处理，不会上传。",
-  select: "选择文件", loading: "正在读取并解析文档…", permission: "需要你的许可才能读取这个文档来源。",
+  select: "选择文件", loading: "正在读取并解析文档…", permission: "允许后，将使用浏览器已有登录态读取这个文档来源。",
   grant: "允许并继续", failed: "无法预览此文档。", copy: "复制诊断", copied: "诊断已复制。",
 } : {
   choose: "Choose file", headline: "Choose or drop a document", privacy: "Files stay on this device and are not uploaded.",
-  select: "Choose file", loading: "Reading and parsing the document…", permission: "Permission is required to read this document source.",
+  select: "Choose file", loading: "Reading and parsing the document…", permission: "Allow this document source to be read using your existing browser session.",
   grant: "Allow and continue", failed: "This document could not be previewed.", copy: "Copy diagnostic", copied: "Diagnostic copied.",
 };
 
@@ -105,7 +105,7 @@ async function fetchRemote(value, task, referrer) {
         });
         ruleAdded = true;
       }
-      response = await fetch(url, { cache: "no-store", credentials: "omit", redirect: "manual", signal: controller.signal });
+      response = await fetch(url, { cache: "no-store", credentials: "include", redirect: "manual", signal: controller.signal });
     } finally {
       if (ruleAdded) await api.declarativeNetRequest.updateSessionRules({ removeRuleIds: [referrerRuleId] });
     }

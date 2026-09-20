@@ -42,6 +42,7 @@ test("all manifests are least-privilege MV3 targets", async () => {
     assert.deepEqual(manifest.optional_host_permissions, ["http://*/*", "https://*/*"]);
     assert.ok(manifest.permissions.includes("declarativeNetRequestWithHostAccess"));
     assert.ok(!manifest.permissions.includes("tabs"));
+    assert.ok(!manifest.permissions.includes("cookies"));
     assert.ok(!JSON.stringify(manifest).includes("<all_urls>"));
     assert.ok(!JSON.stringify(manifest).includes("content_scripts"));
     assert.match(manifest.content_security_policy.extension_pages, /^script-src 'self' 'wasm-unsafe-eval'; object-src 'self'$/u);
