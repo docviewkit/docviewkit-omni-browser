@@ -20,7 +20,7 @@ jobs:
           set -euo pipefail
           test -n "$AMO_JWT_ISSUER" && test -n "$AMO_JWT_SECRET"
           jq -e '.summary["en-US"] | length <= 250' targets/firefox/amo-metadata.json >/dev/null
-          jq '{summary}' targets/firefox/amo-metadata.json > amo-metadata.json
+          jq '{summary, description}' targets/firefox/amo-metadata.json > amo-metadata.json
           TOKEN=$(python3 - <<'PY'
           import base64, hashlib, hmac, json, os, time, uuid
 
@@ -49,10 +49,10 @@ jobs:
             -H "Authorization: JWT $TOKEN" \
             --form 'icon=@src/icon-128.png' \
             "$API" >/dev/null
-          EXPECTED=$(jq -c .summary amo-metadata.json)
+          EXPECTED=$(jq -c '{summary, description}' amo-metadata.json)
           for attempt in {1..12}; do
             LIVE=$(curl --fail --silent --show-error "${API}?lang=en-US&check=$GITHUB_RUN_ID-$attempt")
-            if test "$(jq -c .summary <<<"$LIVE")" = "$EXPECTED" && jq -e '.icon_url | contains("/default-") | not' <<<"$LIVE" >/dev/null; then
+            if test "$(jq -c '{summary, description}' <<<"$LIVE")" = "$EXPECTED" && jq -e '.icon_url | contains("/default-") | not' <<<"$LIVE" >/dev/null; then
               exit 0
             fi
             sleep 5

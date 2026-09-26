@@ -126,3 +126,19 @@ test("version tags publish Chrome, Edge, and Firefox but not Safari", async () =
   for (const store of ["chrome", "edge", "firefox"]) assert.match(workflow, new RegExp(`\\n  ${store}:`, "u"));
   assert.doesNotMatch(workflow, /\n  safari:/u);
 });
+
+
+test("README and market descriptions document local OFD preview", async () => {
+  for (const file of ["README.md", "src/README.md", "viewer/README.md", "test/README.md", ...targets.map((target) => `targets/${target}/README.md`)]) {
+    assert.match(await readFile(path.join(root, file), "utf8"), /OFD/u, file);
+  }
+  for (const locale of ["en", "zh_CN"]) {
+    const description = (await json(path.join(root, "src/_locales", locale, "messages.json"))).extensionDescription.message;
+    assert.match(description, /OFD/u);
+    assert.ok(description.length <= 132);
+  }
+  const metadata = await json(path.join(root, "targets/firefox/amo-metadata.json"));
+  for (const locale of ["en-US", "zh-CN"]) assert.match(metadata.description?.[locale] ?? "", /OFD/u);
+  const workflow = await readFile(path.join(root, ".github/workflows/update-firefox-metadata.yml"), "utf8");
+  assert.match(workflow, /jq '\{summary, description\}'/u);
+});

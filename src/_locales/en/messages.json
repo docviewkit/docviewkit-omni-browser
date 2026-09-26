@@ -1,5 +1,5 @@
 {
   "extensionName": { "message": "DocViewKit Omni" },
-  "extensionDescription": { "message": "Private, local, read-only document preview." },
+  "extensionDescription": { "message": "Private, local, read-only previews of Office, PDF, OFD, and more." },
   "previewLink": { "message": "Preview with DocViewKit Omni" }
 }
